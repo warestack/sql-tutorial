@@ -1,4 +1,4 @@
-### Lab5 part 2: Advanced SQL commands
+### Part-2: Advanced SQL commands
 
 #### What am I about to learn?
 

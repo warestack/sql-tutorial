@@ -1,11 +1,26 @@
-### Part 1 Tutorial
+### Part-1: Introduction to SQL
 
-#### What am I about to learn?
+The following tutorial describes a list of commands to interact with the MySQL server deployed on the GCP.
 
-Today's lab session is essential for a solid start in this module. Make sure you complete all the tasks before the next class.
+1. First, you must set up your command line to the current project ID.
 
-1. This lab part 1 focuses on how to use the basics of SQL.
-2. List the databases that are already created.
+2. Type the following command and press enter. Make sure you replace the `<PROJECT_ID>` with your project ID, as presented in the previous video.
+
+```shell
+$ gcloud config set project <PROJECT_ID>
+```
+
+>  Enter a new password when prompted.
+>  :rotating_light: Do not expect to see any characters on the screen! 
+
+Then, connect to the SQL server using the next command.
+
+```shell
+$ gcloud sql connect <SQL-SERVER> --user=root
+```
+
+3. Let us run some basic commands and learn to use the MySQL command line interface (CLI).
+4. List the databases that are already created.
 
 ```sql
 mysql> SHOW DATABASES;
@@ -24,7 +39,7 @@ mysql> SHOW DATABASES;
 
 > This command shows the available databases; as you can see, a few were created already. In this tutorial, we will create a new database.
 
-3. Create a new database called `film_db`.
+5. Create a new database called `film_db`.
 
 ```sql
 mysql> CREATE DATABASE film_db;
@@ -35,16 +50,16 @@ Query OK, 1 row affected (0.11 sec)
 >
 > If you run the `SHOW DATABASES` command once more, the new database will appear on the list.
 
-4. Select the `film_db` database as the current database to work on.
+6. Select the `film_db` database as the current database to work on.
 
 ```sql
 mysql> USE film_db;
 Database changed
 ```
 
-5. Create a new table called actors, following the following data and specification.
+7. Create a new table called actors, following the following data and specification.
 
-a. The table looks like this:
+   a. The table looks like this:
 
 | actor_id | actor_first_name | actor_last_name | actor_city   |
 | -------- | ---------------- | --------------- | ------------ |
@@ -61,7 +76,7 @@ a. The table looks like this:
 
 > Do not worry about the records for the moment; we only care about the creation of our table.
 
-6. To create the table, run the following script.
+8. To create the table, run the following script.
 
 ```sql
 CREATE TABLE actors (
@@ -90,7 +105,7 @@ PRIMARY KEY (actor_id)
 >
 > The `PRIMARY KEY`, ensures that the `actor_id` is always unique and cannot be empty. Do not worry about the `PRIMARY KEY` for the moment.
 
-7. Now, run the `SHOW` command to see the available tables in the selected database.
+9. Now, run the `SHOW` command to see the available tables in the selected database.
 
 ```
 mysql> SHOW TABLEs;
@@ -102,7 +117,7 @@ mysql> SHOW TABLEs;
 1 row in set (0.11 sec)
 ```
 
-8. Run the `DESCRIBE actors` command.
+10. Run the `DESCRIBE actors` command.
 
 ```shell
 mysql> DESCRIBE actors;
@@ -119,7 +134,7 @@ mysql> DESCRIBE actors;
 
 > The `DESCRIBE`command shows the structure of a table which including column names, data-types and the nullability which means, that column can contain null values or not.
 
-9. Let us insert the data into the database using the following command.
+11. Let us insert the data into the database using the following command.
 
 ```sql
 mysql> INSERT INTO actors (actor_id, actor_first_name, actor_last_name, actor_city) 
@@ -134,7 +149,7 @@ VALUES 	(1, 'Tom', 'Hanks', 'Los Angeles');
 > Query OK, 1 row affected (0.11 sec)
 > ```
 
-10. It seems that our first record is now created! Now let's insert the other two records using a single script.
+12. It seems that our first record is now created! Now let's insert the other two records using a single script.
 
 ```mysql
 mysql> INSERT INTO actors (actor_id, actor_first_name, actor_last_name, actor_city) 
@@ -145,7 +160,7 @@ VALUES
 
 > The output shows `Query OK, 2 rows affected (0.01 sec)`, that means the records have been now created.
 
-11. Let us run our first query to extract all the data from the `actors` table. For this query, you will use the `SELECT` command, so run the following script.
+13. Let us run our first query to extract all the data from the `actors` table. For this query, you will use the `SELECT` command, so run the following script.
 
 ```mysql
 mysql> SELECT * FROM actors;
@@ -166,7 +181,7 @@ mysql> SELECT * FROM actors;
 > * Press it, and you will see the last command.
 > * Press up and down, and you will access all the previous commands.
 
-12. Now, let us select only some of the columns, and run the next script.
+14. Now, let us select only some of the columns, and run the next script.
 
 ```mysql
 mysql> SELECT actor_first_name, actor_last_name, actor_city FROM actors;
@@ -181,7 +196,7 @@ mysql> SELECT actor_first_name, actor_last_name, actor_city FROM actors;
 3 rows in set (0.11 sec)
 ```
 
-13. Extract data for actors first and last names from the actors table, only for those living in London.
+15. Extract data for actors first and last names from the actors table, only for those living in London.
 
 ```mysql
 mysql> SELECT actor_first_name, actor_last_name FROM actors WHERE actor_city='London';
@@ -195,7 +210,7 @@ mysql> SELECT actor_first_name, actor_last_name FROM actors WHERE actor_city='Lo
 2 rows in set (0.11 sec)
 ```
 
-14. We can change the `actor` table and include a new column called `salary`. The salary will store integer data of up to 10 digits. To add a new column, we will use the `ALTER TABLE` command.
+16. We can change the `actor` table and include a new column called `salary`. The salary will store integer data of up to 10 digits. To add a new column, we will use the `ALTER TABLE` command.
 
 ```mysql
 mysql> ALTER TABLE actors ADD salary INT(10);
@@ -208,13 +223,13 @@ Records: 0  Duplicates: 0  Warnings: 1
 >
 > :rotating_light: Always be consistent when structuring your tables.
 
-15. Let's drop the newly created column and then create it again using the appropriate naming and data type.
+17. Let's drop the newly created column and then create it again using the appropriate naming and data type.
 
 ```mysql
 mysql> ALTER TABLE actors DROP COLUMN salary;
 ```
 
-16. Now let's create it again.
+18. Now let's create it again.
 
 ```mysql
 mysql> ALTER TABLE actors ADD actor_salary FLOAT(10);
@@ -222,7 +237,7 @@ Query OK, 0 rows affected (0.12 sec)
 Records: 0  Duplicates: 0  Warnings: 0
 ```
 
-17. Extract and print all the actors, now it should look better.
+19. Extract and print all the actors, now it should look better.
 
 ```mysql
 mysql> SELECT * FROM actors;
